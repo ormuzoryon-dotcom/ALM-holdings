@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ALM Holdings</title>
+  <style>
+    :root {
+      --alm-red: #A81B1B;
+      --holdings-blue: #1A365D;
+      --text-dark: #0D1117;
+      --text-muted: #4A5568;
+      --bg-base: #FAFAFA;
+      --halo-gold: rgba(229, 193, 88, 0.28);
+      --halo-core: rgba(243, 229, 171, 0.45);
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-dark);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    /* THE SOVEREIGN HALO CANVAS */
+    .halo-backdrop {
+      position: absolute;
+      top: -150px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 1000px;
+      height: 600px;
+      background: radial-gradient(circle, var(--halo-core) 0%, var(--halo-gold) 35%, rgba(250,250,250,0) 70%);
+      z-index: 0;
+      pointer-events: none;
+      filter: blur(40px);
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      max-width: 920px;
+      margin: 0 auto;
+      padding: 100px 24px 60px 24px;
+      text-align: center;
+    }
+
+    /* Brand Header Architecture */
+    .brand-header {
+      margin-bottom: 12px;
+      user-select: none;
+    }
+
+    .brand-alm {
+      font-size: 72px;
+      font-weight: 900;
+      color: var(--alm-red);
+      letter-spacing: -1.5px;
+      text-shadow: 0 2px 10px rgba(168, 27, 27, 0.12);
+    }
+
+    .brand-holdings {
+      font-size: 64px;
+      font-weight: 300;
+      color: var(--holdings-blue);
+      letter-spacing: 1px;
+    }
+
+    .brand-nature {
+      font-size: 13px;
+      letter-spacing: 3.5px;
+      color: var(--holdings-blue);
+      text-transform: uppercase;
+      font-weight: 700;
+      margin-top: 14px;
+    }
+
+    .brand-motto {
+      font-size: 11px;
+      letter-spacing: 2.5px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      margin-top: 6px;
+      font-weight: 600;
+    }
+
+    /* Main Core Statement */
+    .headline-bold {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--holdings-blue);
+      margin-top: 52px;
+      margin-bottom: 24px;
+      line-height: 1.4;
+      letter-spacing: -0.3px;
+    }
+
+    .body-statement {
+      font-size: 16.5px;
+      line-height: 1.85;
+      color: var(--text-muted);
+      max-width: 760px;
+      margin: 0 auto 48px auto;
+      font-weight: 400;
+    }
+
+    /* Action Buttons */
+    .nav-actions {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .btn-action {
+      background: rgba(255, 255, 255, 0.8);
+      border: 1.5px solid var(--holdings-blue);
+      color: var(--holdings-blue);
+      padding: 13px 32px;
+      font-size: 12.5px;
+      font-weight: 700;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      cursor: pointer;
+      backdrop-filter: blur(4px);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .btn-action:hover {
+      background: var(--holdings-blue);
+      color: #FFFFFF;
+      box-shadow: 0 8px 20px rgba(26, 54, 93, 0.2);
+    }
+
+    /* Modal Form */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100%; height: 100%;
+      background: rgba(13, 17, 23, 0.75);
+      backdrop-filter: blur(6px);
+      align-items: center;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal-content {
+      background: #FFFFFF;
+      padding: 44px;
+      border-radius: 2px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
+      text-align: left;
+    }
+
+    .modal-content h3 {
+      margin-top: 0;
+      color: var(--holdings-blue);
+      font-size: 16px;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .modal-content input, .modal-content textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 8px 0 20px 0;
+      border: 1px solid #CBD5E0;
+      border-radius: 2px;
+      box-sizing: border-box;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid #E2E8F0;
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(250, 250, 250, 0.9);
+    }
+
+    .cacatus-egg {
+      color: #F0F0F0; /* Micro easter egg */
+      font-size: 8px;
+      font-style: italic;
+      margin-top: 6px;
+      cursor: pointer;
+      user-select: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Bespoke Radial Halo Element -->
+  <div class="halo-backdrop"></div>
+
+  <div class="container">
+    <div class="brand-header">
+      <span class="brand-alm">ALM</span> <span class="brand-holdings">Holdings</span>
+    </div>
+    
+    <div class="brand-nature">Dynamic Structured Investments</div>
+    <div class="brand-motto">Stakeless Governance</div>
+
+    <div class="headline-bold">
+      Strategic Capital Management &amp; Institutional Asset Governance.
+    </div>
+
+    <div class="body-statement">
+      Operating at the intersection of quantitative value analysis, spot value creation, strategic infrastructure investments, Visual Assets, and frontier technology. Global presence a core structure.
+    </div>
+
+    <div class="nav-actions">
+      <button class="btn-action" onclick="openContact()">Contact Us</button>
+      <button class="btn-action" onclick="openAbout()">About Us</button>
+    </div>
+  </div>
+
+  <!-- Internal Modal Window -->
+  <div id="contactModal" class="modal">
+    <div class="modal-content">
+      <h3>Inquiry Dispatch</h3>
+      <form id="contactForm" onsubmit="submitForm(event)">
+        <label style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);">Corporate Identification</label>
+        <input type="text" required placeholder="Name / Entity">
+        
+        <label style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);">Direct Return Channel</label>
+        <input type="email" required placeholder="Return Email">
+        
+        <label style="font-size: 11px; letter-spacing: 1px; text-transform: uppercase; color: var(--text-muted);">Inquiry Brief</label>
+        <textarea rows="4" required placeholder="Brief detail of your query..."></textarea>
+        
+        <div style="display: flex; justify-content: space-between; margin-top: 10px;">
+          <button type="button" class="btn-action" onclick="closeContact()">Cancel</button>
+          <button type="submit" class="btn-action" style="background: var(--holdings-blue); color: #FFF;">Dispatch</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer>
+    <div>&copy; 2026 ALM Holdings. All Rights Reserved.</div>
+    <div class="cacatus-egg" onclick="triggerFlashCascade()">Nugae cum Defensione — Taurinus Cacatus</div>
+  </footer>
+
+  <script>
+    function openContact() { document.getElementById('contactModal').style.display = 'flex'; }
+    function closeContact() { document.getElementById('contactModal').style.display = 'none'; }
+    function openAbout() { alert("ALM Holdings: Sovereign Capital & Infrastructure Governance."); }
+    function submitForm(e) {
+      e.preventDefault();
+      alert("Inquiry dispatched securely. Vanguard Registry acknowledged.");
+      closeContact();
+    }
+
+    // Keysequence trigger for Flash Cascade ('vanguard')
+    let inputSeq = '';
+    document.addEventListener('keydown', (e) => {
+      inputSeq += e.key.toLowerCase();
+      if (inputSeq.length > 8) inputSeq = inputSeq.slice(-8);
+      if (inputSeq === 'vanguard') triggerFlashCascade();
+    });
+
+    function triggerFlashCascade() {
+      const flash = document.createElement('div');
+      flash.style.position = 'fixed';
+      flash.style.top = '0'; flash.style.left = '0';
+      flash.style.width = '100vw'; flash.style.height = '100vh';
+      flash.style.background = '#0B132B';
+      flash.style.zIndex = '99999';
+      flash.style.transition = 'opacity 0.3s ease';
+      document.body.appendChild(flash);
+      
+      setTimeout(() => {
+        alert("FLASH CASCADE: Accessing MRM Consulting / Cacatus View.");
+        flash.style.opacity = '0';
+        setTimeout(() => flash.remove(), 300);
+      }, 200);
+    }
+
+    // Console Solver Logs
+    console.log("%c[VANGUARD SYSTEM MASTER ACTIVE]", "color: #A81B1B; font-weight: bold; font-size: 14px;");
+    console.log("Sub-Directory Access Keys:");
+    console.log("-> /mrmconsulting (Advisory & Legal Translation)");
+    console.log("-> /thevalueengine (Technical Appraisals & Quantitative Telemetry)");
+    console.log("-> /mrmfilms (4K Media & Asset Telemetry)");
+  </script>
+</body>
+</html>
